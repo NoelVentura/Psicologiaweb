@@ -19,6 +19,15 @@ import { toPage } from '../lib/paths';
 import HeroVideo from '../components/minimal/HeroVideo.astro';
 
 const featured = featuredArticles.slice(0, 4);
+const editorRoles = ['role.editorial', 'role.review'];
+const collaboratorRoles = [
+	'role.clinical',
+	'role.education',
+	'role.clinical',
+	'role.clinical',
+	'role.sexology',
+	'role.health',
+];
 ---
 
 <MinimalLayout title={site.tagline}>
@@ -28,12 +37,12 @@ const featured = featuredArticles.slice(0, 4);
 		<section class="min-hero" id="inicio">
 			<div class="min-container min-hero__grid">
 				<div class="min-hero__content">
-					<p class="min-hero__label">{headline.text}</p>
-					<h1>{headline.title}</h1>
-					<p class="min-hero__lead">{headline.subtitle}</p>
+					<p class="min-hero__label" data-i18n="hero.label">{headline.text}</p>
+					<h1 data-i18n="hero.title">{headline.title}</h1>
+					<p class="min-hero__lead" data-i18n="hero.subtitle">{headline.subtitle}</p>
 					<div class="min-hero__actions">
-						<a href="#articulos" class="min-btn min-btn--primary">Ver artículos</a>
-						<a href={aboutSection.linkHref} class="min-btn min-btn--ghost">{aboutSection.linkLabel}</a>
+						<a href="#articulos" class="min-btn min-btn--primary" data-i18n="hero.ctaArticles">Ver artículos</a>
+						<a href={aboutSection.linkHref} class="min-btn min-btn--ghost" data-i18n="hero.ctaProject">{aboutSection.linkLabel}</a>
 					</div>
 				</div>
 				<HeroVideo />
@@ -43,8 +52,8 @@ const featured = featuredArticles.slice(0, 4);
 		<section id="articulos" class="min-section min-section--alt">
 			<div class="min-container">
 				<div class="min-section__head">
-					<h2>Destacados</h2>
-					<a href="#recientes">Más artículos</a>
+					<h2 data-i18n="section.featured">Destacados</h2>
+					<a href="#recientes" data-i18n="section.moreArticles">Más artículos</a>
 				</div>
 				<div class="min-grid min-grid--4">
 					{
@@ -64,12 +73,12 @@ const featured = featuredArticles.slice(0, 4);
 		<section class="min-section">
 			<div class="min-container">
 				<div class="min-section__head">
-					<h2>Temas</h2>
+					<h2 data-i18n="section.topics">Temas</h2>
 				</div>
 				<div class="min-tags">
 					{
 						categories.map((cat) => (
-							<a class="min-tag" href={toPage(`/categoria/${cat.slug}`)}>
+							<a class="min-tag" href={toPage(`/categoria/${cat.slug}`)} data-i18n={`category.${cat.slug}`}>
 								{cat.label}
 							</a>
 						))
@@ -82,10 +91,10 @@ const featured = featuredArticles.slice(0, 4);
 			<div class="min-container">
 				<div class="min-pillars">
 					{
-						pillars.map((pillar) => (
+						pillars.map((pillar, i) => (
 							<div class="min-pillar">
-								<h3>{pillar.title}</h3>
-								<p>{pillar.description}</p>
+								<h3 data-i18n={`pillar.${i}.title`}>{pillar.title}</h3>
+								<p data-i18n={`pillar.${i}.desc`}>{pillar.description}</p>
 							</div>
 						))
 					}
@@ -96,16 +105,16 @@ const featured = featuredArticles.slice(0, 4);
 		<section class="min-section">
 			<div class="min-container">
 				<div class="min-section__head">
-					<h2>{reviewsSection.title}</h2>
+					<h2 data-i18n="section.reviews">{reviewsSection.title}</h2>
 				</div>
 				<div class="min-quotes">
 					{
-						reviewsSection.items.map((item) => (
+						reviewsSection.items.map((item, i) => (
 							<blockquote class="min-quote">
-								<p>“{item.quote}”</p>
+								<p data-i18n-quote={`quote.${i}.text`}>“{item.quote}”</p>
 								<footer>
 									<strong>{item.name}</strong>
-									{item.role}
+									<span data-i18n={`quote.${i}.role`}>{item.role}</span>
 								</footer>
 							</blockquote>
 						))
@@ -117,7 +126,7 @@ const featured = featuredArticles.slice(0, 4);
 		<section id="recientes" class="min-section min-section--alt">
 			<div class="min-container">
 				<div class="min-section__head">
-					<h2>Últimas publicaciones</h2>
+					<h2 data-i18n="section.recent">Últimas publicaciones</h2>
 				</div>
 				<div class="min-grid min-grid--4">
 					{
@@ -137,7 +146,7 @@ const featured = featuredArticles.slice(0, 4);
 		<section id="populares" class="min-section">
 			<div class="min-container">
 				<div class="min-section__head">
-					<h2>Lo más leído</h2>
+					<h2 data-i18n="section.popular">Lo más leído</h2>
 				</div>
 				<div class="min-grid min-grid--3">
 					{
@@ -159,36 +168,40 @@ const featured = featuredArticles.slice(0, 4);
 				<div class="min-about">
 					<h2
 						style="font-family:var(--m-serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:400;margin:0 0 1rem;"
+						data-i18n="section.aboutTitle"
 					>
 						{aboutBlock.title}
 					</h2>
-					<p>{aboutSection.text}</p>
-					<a href={aboutSection.linkHref} class="min-btn min-btn--ghost" style="margin-top:0.5rem;">
+					<p data-i18n="section.aboutText">{aboutSection.text}</p>
+					<a href={aboutSection.linkHref} class="min-btn min-btn--ghost" style="margin-top:0.5rem;" data-i18n="section.aboutCta">
 						{aboutBlock.ctaLabel}
 					</a>
 				</div>
 				<div>
-					<p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--m-muted);margin:0 0 1rem;">
+					<p
+						style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--m-muted);margin:0 0 1rem;"
+						data-i18n="section.team"
+					>
 						Equipo
 					</p>
 					<div class="min-team">
 						{
-							editors.map((person) => (
+							editors.map((person, i) => (
 								<div class="min-team-member">
 									<img src={person.image} alt={person.name} width="56" height="56" loading="lazy" />
 									<p>{person.name}</p>
-									<span>{person.role}</span>
+									<span data-i18n={editorRoles[i]}>{person.role}</span>
 								</div>
 							))
 						}
 					</div>
 					<div class="min-team min-team--wide" style="margin-top:1.5rem;">
 						{
-							collaborators.map((person) => (
+							collaborators.map((person, i) => (
 								<div class="min-team-member">
 									<img src={person.image} alt={person.name} width="56" height="56" loading="lazy" />
 									<p>{person.name}</p>
-									<span>{person.role}</span>
+									<span data-i18n={collaboratorRoles[i]}>{person.role}</span>
 								</div>
 							))
 						}
@@ -202,25 +215,26 @@ const featured = featuredArticles.slice(0, 4);
 				<div>
 					<h2
 						style="font-family:var(--m-serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:400;margin:0 0 0.75rem;"
+						data-i18n="section.contactTitle"
 					>
 						{contactBlock.title}
 					</h2>
-					<p style="color:var(--m-muted);margin:0;line-height:1.7;">{contactBlock.description}</p>
+					<p style="color:var(--m-muted);margin:0;line-height:1.7;" data-i18n="section.contactText">{contactBlock.description}</p>
 				</div>
 				<form class="min-form" action={toPage('/contacto')} method="get">
 					<div>
-						<label for="nombre">Nombre</label>
+						<label for="nombre" data-i18n="form.name">Nombre</label>
 						<input id="nombre" name="nombre" type="text" autocomplete="given-name" />
 					</div>
 					<div>
-						<label for="email">Email</label>
+						<label for="email" data-i18n="form.email">Email</label>
 						<input id="email" name="email" type="email" autocomplete="email" />
 					</div>
 					<div>
-						<label for="mensaje">Mensaje</label>
+						<label for="mensaje" data-i18n="form.message">Mensaje</label>
 						<textarea id="mensaje" name="mensaje" rows="4"></textarea>
 					</div>
-					<button type="submit" class="min-btn min-btn--primary">{contactBlock.submitLabel}</button>
+					<button type="submit" class="min-btn min-btn--primary" data-i18n="form.submit">{contactBlock.submitLabel}</button>
 				</form>
 			</div>
 		</section>

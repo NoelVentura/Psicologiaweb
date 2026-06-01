@@ -2,6 +2,7 @@
 import '../styles/minimal-home.css';
 import { site } from '../data/site';
 import { publicAsset } from '../lib/paths';
+import { translations } from '../data/translations';
 
 interface Props {
 	title?: string;
@@ -32,10 +33,16 @@ const pageTitle = title ? `${title} | ${site.name}` : `${site.tagline} | ${site.
 				if (localStorage.getItem('min-theme') === 'dark') {
 					document.documentElement.setAttribute('data-theme', 'dark');
 				}
+				var lang = localStorage.getItem('min-lang');
+				if (lang === 'es' || lang === 'en') {
+					document.documentElement.lang = lang;
+				}
 			})();
 		</script>
 	</head>
 	<body class="min-body">
 		<slot />
+		<script type="application/json" id="min-i18n-data" set:html={JSON.stringify(translations)} />
+		<script src={publicAsset('/scripts/min-i18n.js')} defer></script>
 	</body>
 </html>

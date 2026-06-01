@@ -5,7 +5,8 @@ const videoSrc = publicAssetRelative('/videos/video-maria.mp4');
 ---
 
 <div class="min-hero__media">
-	<video
+	<div class="min-hero__video-wrap">
+		<video
 		class="min-hero__video"
 		data-hero-video
 		autoplay
@@ -14,27 +15,70 @@ const videoSrc = publicAssetRelative('/videos/video-maria.mp4');
 		playsinline
 		webkit-playsinline
 		preload="auto"
-		controls
-		controlslist="nodownload noplaybackrate"
 		aria-label="Vídeo de presentación — Maria Acevedo"
 	>
 		<source src={videoSrc} type="video/mp4" />
 	</video>
+	<button
+		type="button"
+		class="min-hero__sound"
+		data-hero-sound
+		aria-label="Activar sonido"
+		aria-pressed="false"
+		title="Activar sonido"
+	>
+		<svg class="min-hero__sound-icon min-hero__sound-icon--off" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+			<path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+			<path d="m15 9 6 6M21 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+		</svg>
+		<svg class="min-hero__sound-icon min-hero__sound-icon--on" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+			<path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+			<path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+		</svg>
+	</button>
+	</div>
 </div>
 
 <script is:inline>
 	(function () {
+		function syncSoundButton(video, btn) {
+			var on = !video.muted;
+			btn.classList.toggle('is-unmuted', on);
+			btn.setAttribute('aria-pressed', String(on));
+			btn.setAttribute('aria-label', on ? 'Silenciar' : 'Activar sonido');
+			btn.setAttribute('title', on ? 'Silenciar' : 'Activar sonido');
+		}
+
 		function startHeroVideos() {
 			document.querySelectorAll('[data-hero-video]').forEach(function (video) {
+				if (video.dataset.heroBound) return;
+				video.dataset.heroBound = 'true';
+
+				var wrap = video.closest('.min-hero__video-wrap');
+				var btn = wrap ? wrap.querySelector('[data-hero-sound]') : null;
+
 				video.muted = true;
+
 				var play = function () {
 					video.play().catch(function () {});
 				};
+
 				if (video.readyState >= 2) play();
 				else video.addEventListener('loadeddata', play, { once: true });
 				document.addEventListener('pointerdown', play, { once: true });
+
+				if (btn) {
+					syncSoundButton(video, btn);
+					btn.addEventListener('click', function () {
+						video.muted = !video.muted;
+						if (!video.muted) video.volume = 1;
+						syncSoundButton(video, btn);
+						play();
+					});
+				}
 			});
 		}
+
 		startHeroVideos();
 		document.addEventListener('astro:page-load', startHeroVideos);
 	})();

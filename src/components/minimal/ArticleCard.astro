@@ -17,7 +17,7 @@ const category = getCategoryBySlug(categorySlug);
 		<div class="min-card__media">
 			<img src={image} alt="" loading="lazy" width="400" height="300" />
 		</div>
-		<p class="min-card__cat">{category?.label ?? 'Artículo'}</p>
+		<p class="min-card__cat" data-i18n={category ? `category.${categorySlug}` : undefined}>{category?.label ?? 'Artículo'}</p>
 		<h3 class="min-card__title">{title}</h3>
 	</a>
 </article>

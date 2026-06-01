@@ -1,50 +1,62 @@
 ---
-import { site, navDiscover } from '../../data/site';
+import { categories } from '../../data/categories';
 import { HOME, toPage } from '../../lib/paths';
 import MinimalThemeToggle from './MinimalThemeToggle.astro';
+import MinimalLangSwitcher from './MinimalLangSwitcher.astro';
+
+const navItems = [
+	{ key: 'nav.home', href: HOME },
+	{ key: 'nav.articles', href: `${HOME}#articulos` },
+	{ key: 'nav.about', href: `${HOME}#nosotros` },
+	{ key: 'nav.project', href: toPage('/quienes-somos') },
+	{ key: 'nav.contact', href: toPage('/contacto') },
+];
 ---
 
 <header class="min-header">
 	<div class="min-container min-header__inner">
 		<a href={HOME} class="min-logo">
-			<strong>Psicología</strong>
-			<span>con Maria Acevedo</span>
+			<strong data-i18n="logo.psychology">Psicología</strong>
+			<span data-i18n="logo.with">con Maria Acevedo</span>
 		</a>
 
 		<nav class="min-nav" aria-label="Principal">
-			<a href={HOME}>Inicio</a>
-			<a href={`${HOME}#articulos`}>Artículos</a>
-			<a href={`${HOME}#nosotros`}>Nosotros</a>
-			<a href={toPage('/quienes-somos')}>Proyecto</a>
-			<a href={toPage('/contacto')}>Contacto</a>
+			{navItems.map((item) => (
+				<a href={item.href} data-i18n={item.key}>
+					{item.key === 'nav.home' ? 'Inicio' : item.key === 'nav.articles' ? 'Artículos' : item.key === 'nav.about' ? 'Nosotros' : item.key === 'nav.project' ? 'Proyecto' : 'Contacto'}
+				</a>
+			))}
 		</nav>
 
 		<div class="min-header__tools">
+			<MinimalLangSwitcher />
 			<MinimalThemeToggle />
 
 			<button
-			type="button"
-			class="min-menu-btn"
-			aria-expanded="false"
-			aria-controls="min-mobile-nav"
-			data-menu-toggle
-		>
-			<span class="min-sr-only">Menú</span>
-			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-				<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-				></path>
-			</svg>
-		</button>
+				type="button"
+				class="min-menu-btn"
+				aria-expanded="false"
+				aria-controls="min-mobile-nav"
+				data-menu-toggle
+			>
+				<span class="min-sr-only" data-i18n="nav.menu">Menú</span>
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
 		</div>
 	</div>
 
 	<nav id="min-mobile-nav" class="min-mobile-nav min-container" data-site-nav hidden>
-		<a href={HOME}>Inicio</a>
-		{navDiscover.slice(0, 6).map((item) => (
-			<a href={item.href}>{item.label}</a>
+		<a href={HOME} data-i18n="nav.home">Inicio</a>
+		{categories.slice(0, 6).map((cat) => (
+			<a href={toPage(`/categoria/${cat.slug}`)} data-i18n={`category.${cat.slug}`}>
+				{cat.label}
+			</a>
 		))}
-		<a href={toPage('/quienes-somos')}>Quiénes somos</a>
-		<a href={toPage('/contacto')}>Contacto</a>
+		<a href={toPage('/quienes-somos')} data-i18n="nav.whoWeAre">Quiénes somos</a>
+		<a href={toPage('/contacto')} data-i18n="nav.contact">Contacto</a>
 	</nav>
 </header>
 

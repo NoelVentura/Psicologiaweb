@@ -1,32 +1,39 @@
 ---
-import { site, navDiscover, footerLinks } from '../../data/site';
-import { HOME } from '../../lib/paths';
+import { site, footerLinks } from '../../data/site';
+import { categories } from '../../data/categories';
+import { toPage } from '../../lib/paths';
 
 const year = new Date().getFullYear();
+const legalKeys = ['legal.about', 'legal.contact', 'legal.terms', 'legal.privacy', 'legal.cookies'];
 ---
 
 <footer class="min-footer">
 	<div class="min-container">
 		<div class="min-footer__top">
 			<div>
-				<p style="margin:0 0 0.5rem;font-family:var(--m-serif);font-size:1.125rem;color:var(--m-text);">
+				<p
+					style="margin:0 0 0.5rem;font-family:var(--m-serif);font-size:1.125rem;color:var(--m-text);"
+					data-i18n="site.name"
+				>
 					{site.name}
 				</p>
-				<p style="margin:0;max-width:22rem;line-height:1.6;">{site.description}</p>
+				<p style="margin:0;max-width:22rem;line-height:1.6;" data-i18n="site.description">{site.description}</p>
 			</div>
 			<ul class="min-footer__links">
-				{navDiscover.slice(0, 5).map((item) => (
+				{categories.slice(0, 5).map((cat) => (
 					<li>
-						<a href={item.href}>{item.label}</a>
+						<a href={toPage(`/categoria/${cat.slug}`)} data-i18n={`category.${cat.slug}`}>
+							{cat.label}
+						</a>
 					</li>
 				))}
 			</ul>
 		</div>
 		<div class="min-footer__bottom">
-			<p style="margin:0">© {year} {site.name}</p>
+			<p style="margin:0">© {year} <span data-i18n="site.name">{site.name}</span></p>
 			<nav aria-label="Legal">
-				{footerLinks.legal.map((item) => (
-					<a href={item.href}>{item.label}</a>
+				{footerLinks.legal.map((item, i) => (
+					<a href={item.href} data-i18n={legalKeys[i]}>{item.label}</a>
 				))}
 			</nav>
 		</div>
