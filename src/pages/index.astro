@@ -1,5 +1,7 @@
 ---
-import { HOME } from '../lib/paths';
+import { HOME, homeUrl } from '../lib/paths';
+
+const destination = homeUrl(Astro.site);
 ---
 
 <!doctype html>
@@ -7,14 +9,15 @@ import { HOME } from '../lib/paths';
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta http-equiv="refresh" content={`0; url=${HOME}`} />
-		<link rel="canonical" href={HOME} />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="refresh" content={`0; url=${destination}`} />
+		<link rel="canonical" href={destination} />
 		<title>Redirigiendo… | Psicología con Maria Acevedo</title>
-		<script is:inline define:vars={{ home: HOME }}>
+		<script is:inline define:vars={{ home: destination }}>
 			location.replace(home);
 		</script>
 	</head>
 	<body>
-		<p><a href={HOME}>Ir a la página de inicio</a></p>
+		<p><a href={destination}>Ir a la página de inicio</a></p>
 	</body>
 </html>

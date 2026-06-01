@@ -17,6 +17,12 @@ function withBase(path: string): string {
 /** Ruta de la página de inicio (archivo .html en build estático). */
 export const HOME = withBase('pagina-de-inicio.html');
 
+/** URL absoluta de inicio (producción en GitHub Pages). */
+export function homeUrl(site: URL | string | undefined): string {
+	if (!site) return HOME;
+	return new URL(HOME, site).href;
+}
+
 /** Convierte una ruta interna al formato .html del sitio. */
 export function toPage(path: string): string {
 	if (!path || path === '/') return HOME;

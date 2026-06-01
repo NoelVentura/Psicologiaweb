@@ -11,6 +11,12 @@ npm run dev
 
 Abre [http://localhost:4321/pagina-de-inicio.html](http://localhost:4321/pagina-de-inicio.html) (la raíz `/` redirige automáticamente).
 
+## Sitio publicado (GitHub Pages)
+
+**https://noelventura.github.io/Psicologiaweb/pagina-de-inicio.html**
+
+Importante: la barra `/` entre `Psicologiaweb` y `pagina-de-inicio.html` es obligatoria.
+
 ## Estructura
 
 - `src/data/site.ts` — textos, menús y listados de artículos
