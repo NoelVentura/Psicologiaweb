@@ -1,0 +1,41 @@
+---
+import { publicAssetRelative } from '../../lib/paths';
+
+const videoSrc = publicAssetRelative('/videos/video-maria.mp4');
+---
+
+<div class="min-hero__media">
+	<video
+		class="min-hero__video"
+		data-hero-video
+		autoplay
+		muted
+		loop
+		playsinline
+		webkit-playsinline
+		preload="auto"
+		controls
+		controlslist="nodownload noplaybackrate"
+		aria-label="Vídeo de presentación — Maria Acevedo"
+	>
+		<source src={videoSrc} type="video/mp4" />
+	</video>
+</div>
+
+<script is:inline>
+	(function () {
+		function startHeroVideos() {
+			document.querySelectorAll('[data-hero-video]').forEach(function (video) {
+				video.muted = true;
+				var play = function () {
+					video.play().catch(function () {});
+				};
+				if (video.readyState >= 2) play();
+				else video.addEventListener('loadeddata', play, { once: true });
+				document.addEventListener('pointerdown', play, { once: true });
+			});
+		}
+		startHeroVideos();
+		document.addEventListener('astro:page-load', startHeroVideos);
+	})();
+</script>

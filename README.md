@@ -2,14 +2,44 @@
 
 Réplica minimalista de [psicologia-online.com](https://www.psicologia-online.com/): misma estructura, secciones y contenidos, con diseño limpio en blanco y negro.
 
-## Desarrollo
+## Vista previa local (antes de subir a GitHub)
+
+Edita la página de inicio en **`src/pages/pagina-de-inicio.astro`** (no abras `dist/` con doble clic: con `file://` no cargan estilos ni vídeo).
+
+### 1. Mientras modificas (recomendado)
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre [http://localhost:4321/pagina-de-inicio.html](http://localhost:4321/pagina-de-inicio.html) (la raíz `/` redirige automáticamente).
+Abre [http://localhost:4321/pagina-de-inicio.html](http://localhost:4321/pagina-de-inicio.html). Los cambios se ven al guardar el archivo.
+
+### 2. Probar el HTML generado en `dist/` (como tras `npm run build`)
+
+```bash
+npm run preview:local
+```
+
+Sirve la carpeta `dist/` en un servidor local (equivalente a ver `pagina-de-inicio.html` bien, sin `file://`).
+
+### 3. Probar igual que en GitHub Pages (con `/Psicologiaweb/` en las rutas)
+
+```bash
+npm run preview:github
+```
+
+Abre [http://localhost:4321/Psicologiaweb/pagina-de-inicio.html](http://localhost:4321/Psicologiaweb/pagina-de-inicio.html).
+
+### Subir cambios a GitHub
+
+```bash
+git add .
+git commit -m "Describe tu cambio"
+git push origin master:main
+```
+
+GitHub Actions vuelve a publicar el sitio en unos minutos.
 
 ## Sitio publicado (GitHub Pages)
 

@@ -15,7 +15,8 @@ import {
 } from '../data/site';
 import { categories } from '../data/categories';
 import { pillars, reviewsSection, aboutBlock, contactBlock } from '../data/home';
-import { publicAsset, toPage } from '../lib/paths';
+import { toPage } from '../lib/paths';
+import HeroVideo from '../components/minimal/HeroVideo.astro';
 
 const featured = featuredArticles.slice(0, 4);
 ---
@@ -35,20 +36,7 @@ const featured = featuredArticles.slice(0, 4);
 						<a href={aboutSection.linkHref} class="min-btn min-btn--ghost">{aboutSection.linkLabel}</a>
 					</div>
 				</div>
-				<div class="min-hero__media">
-					<video
-						class="min-hero__video"
-						src={publicAsset('/videos/Maria.mp4')}
-						autoplay
-						muted
-						loop
-						playsinline
-						preload="metadata"
-						aria-label="Vídeo de presentación — Maria Acevedo"
-					>
-						Tu navegador no reproduce vídeo HTML5.
-					</video>
-				</div>
+				<HeroVideo />
 			</div>
 		</section>
 

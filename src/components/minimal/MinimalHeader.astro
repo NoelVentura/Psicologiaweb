@@ -1,6 +1,7 @@
 ---
 import { site, navDiscover } from '../../data/site';
 import { HOME, toPage } from '../../lib/paths';
+import MinimalThemeToggle from './MinimalThemeToggle.astro';
 ---
 
 <header class="min-header">
@@ -18,7 +19,10 @@ import { HOME, toPage } from '../../lib/paths';
 			<a href={toPage('/contacto')}>Contacto</a>
 		</nav>
 
-		<button
+		<div class="min-header__tools">
+			<MinimalThemeToggle />
+
+			<button
 			type="button"
 			class="min-menu-btn"
 			aria-expanded="false"
@@ -31,6 +35,7 @@ import { HOME, toPage } from '../../lib/paths';
 				></path>
 			</svg>
 		</button>
+		</div>
 	</div>
 
 	<nav id="min-mobile-nav" class="min-mobile-nav min-container" data-site-nav hidden>

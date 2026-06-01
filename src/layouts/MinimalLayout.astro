@@ -27,6 +27,13 @@ const pageTitle = title ? `${title} | ${site.name}` : `${site.tagline} | ${site.
 			rel="stylesheet"
 		/>
 		<title>{pageTitle}</title>
+		<script is:inline>
+			(function () {
+				if (localStorage.getItem('min-theme') === 'dark') {
+					document.documentElement.setAttribute('data-theme', 'dark');
+				}
+			})();
+		</script>
 	</head>
 	<body class="min-body">
 		<slot />

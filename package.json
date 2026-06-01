@@ -6,8 +6,11 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --open /pagina-de-inicio.html",
     "build": "astro build",
+    "build:github": "node scripts/build-github-pages.mjs",
+    "preview:local": "astro build && astro preview --open /pagina-de-inicio.html",
+    "preview:github": "npm run build:github && astro preview --open /Psicologiaweb/pagina-de-inicio.html",
     "export:home": "node scripts/export-home-html.mjs",
     "preview": "astro preview",
     "import:articles": "node scripts/import-articles.mjs",

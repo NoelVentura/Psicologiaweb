@@ -9,6 +9,14 @@ export function publicAsset(path: string): string {
 	return `${siteBase()}${clean}`;
 }
 
+/**
+ * Ruta relativa a public/ (p. ej. videos/Maria.mp4).
+ * Funciona en servidor local, GitHub Pages y al abrir dist/*.html con file://
+ */
+export function publicAssetRelative(path: string): string {
+	return path.replace(/^\//, '');
+}
+
 function withBase(path: string): string {
 	const clean = path.replace(/^\//, '');
 	return `${siteBase()}${clean}`;
