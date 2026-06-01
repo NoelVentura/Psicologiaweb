@@ -1,0 +1,353 @@
+---
+import { site, navDiscover, navNearYou } from '../data/site';
+import { announcement } from '../data/home';
+import { HOME, toPage } from '../lib/paths';
+---
+
+<div class="aw-announce" id="site-announcement">
+	<span>{announcement.text}</span>
+	<a href={announcement.ctaHref}>{announcement.ctaLabel}</a>
+</div>
+
+<header class="aw-header" data-aw-header>
+	<div class="aw-container aw-header__inner">
+		<div class="aw-header__left">
+			<a href={HOME} class="aw-logo" aria-label={site.name}>
+				<span class="aw-logo__main">Psicología</span>
+				<span class="aw-logo__sub">Maria Acevedo</span>
+			</a>
+			<nav class="aw-header__nav" aria-label="Principal">
+				<a href={toPage('/quienes-somos')}>Quiénes somos</a>
+				<a href="#catalogo">Artículos</a>
+				<a href="#nosotros">Equipo</a>
+			</nav>
+		</div>
+
+		<div class="aw-header__search">
+			<a href={toPage('/busqueda')} class="aw-search-trigger">
+				<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+					<path
+						d="m20 20-4.2-4.2M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+						stroke="currentColor"
+						stroke-width="1.8"
+						stroke-linecap="round"
+						stroke-linejoin="round"></path>
+				</svg>
+				<span>Buscar artículos…</span>
+				<kbd class="aw-search-kbd">Ctrl K</kbd>
+			</a>
+		</div>
+
+		<div class="aw-header__right">
+			<a href={toPage('/directorio/psicologos')} class="aw-header__link">Directorio</a>
+			<a href={toPage('/contacto')} class="aw-header__link">Contacto</a>
+			<button
+				type="button"
+				class="aw-menu-btn"
+				aria-expanded="false"
+				aria-controls="aw-mobile-nav"
+				data-menu-toggle
+			>
+				<span class="sr-only">Menú</span>
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+</header>
+
+<nav id="aw-mobile-nav" class="aw-mobile-nav" data-site-nav hidden>
+	<div class="aw-container">
+		<p class="aw-mobile-nav__label">Temas</p>
+		<ul>
+			{navDiscover.map((item) => (
+				<li>
+					<a href={item.href}>{item.label}</a>
+				</li>
+			))}
+		</ul>
+		<p class="aw-mobile-nav__label">Recursos</p>
+		<ul>
+			{navNearYou.map((item) => (
+				<li>
+					<a href={item.href}>{item.label}</a>
+				</li>
+			))}
+		</ul>
+	</div>
+</nav>
+
+<script>
+	const header = document.querySelector('[data-aw-header]');
+	const announcementEl = document.getElementById('site-announcement');
+	const toggle = document.querySelector('[data-menu-toggle]');
+	const nav = document.querySelector('[data-site-nav]');
+
+	const updateHeader = () => {
+		const scrolled = window.scrollY > 24;
+		header?.classList.toggle('aw-header--solid', scrolled);
+	};
+
+	updateHeader();
+	window.addEventListener('scroll', updateHeader, { passive: true });
+
+	toggle?.addEventListener('click', () => {
+		const open = toggle.getAttribute('aria-expanded') === 'true';
+		toggle.setAttribute('aria-expanded', String(!open));
+		nav?.toggleAttribute('hidden', open);
+		document.body.classList.toggle('aw-nav-open', !open);
+	});
+
+	if (announcementEl && header) {
+		const h = announcementEl.getBoundingClientRect().height;
+		document.documentElement.style.setProperty('--header-offset', `${h}px`);
+	}
+</script>
+
+<style>
+	.aw-header {
+		position: fixed;
+		inset-inline: 0;
+		top: var(--header-offset, 2.25rem);
+		z-index: 40;
+		border-bottom: 1px solid transparent;
+		background: transparent;
+		backdrop-filter: none;
+		transition:
+			background 0.3s,
+			border-color 0.3s,
+			backdrop-filter 0.3s;
+	}
+
+	.aw-header--solid {
+		border-color: var(--aw-border);
+		background: rgba(0, 0, 0, 0.85);
+		backdrop-filter: blur(12px);
+	}
+
+	.aw-header__inner {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5rem 0;
+		min-height: 3.5rem;
+	}
+
+	@media (min-width: 1024px) {
+		.aw-header__inner {
+			grid-template-columns: minmax(0, 1fr) minmax(220px, 560px) minmax(0, 1fr);
+			gap: 1rem;
+			padding: 0.75rem 0;
+			min-height: 4rem;
+		}
+	}
+
+	.aw-header__left {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		min-width: 0;
+	}
+
+	.aw-logo {
+		text-decoration: none;
+		color: var(--aw-text);
+		line-height: 1.05;
+		flex-shrink: 0;
+	}
+
+	.aw-logo__main {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.125rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.aw-logo__sub {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.5625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: var(--aw-muted);
+	}
+
+	.aw-header__nav {
+		display: none;
+		gap: 1.25rem;
+		font-size: 0.75rem;
+	}
+
+	@media (min-width: 1280px) {
+		.aw-header__nav {
+			display: flex;
+		}
+	}
+
+	.aw-header__nav a {
+		color: var(--aw-muted);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.aw-header__nav a:hover {
+		color: var(--aw-text);
+	}
+
+	.aw-header__search {
+		display: none;
+	}
+
+	@media (min-width: 1024px) {
+		.aw-header__search {
+			display: block;
+		}
+	}
+
+	.aw-search-trigger {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		width: 100%;
+		min-height: 2.75rem;
+		padding: 0 1rem;
+		border: 1px solid var(--aw-border);
+		border-radius: 0.5rem;
+		background: var(--aw-surface);
+		color: var(--aw-muted-dim);
+		font-size: 0.875rem;
+		text-decoration: none;
+		transition:
+			border-color 0.2s,
+			color 0.2s;
+	}
+
+	.aw-search-trigger:hover {
+		border-color: rgba(255, 255, 255, 0.2);
+		color: var(--aw-muted);
+	}
+
+	.aw-search-trigger svg {
+		flex-shrink: 0;
+		transition: color 0.2s;
+	}
+
+	.aw-search-trigger:hover svg {
+		color: var(--aw-accent);
+	}
+
+	.aw-search-kbd {
+		display: none;
+		margin-left: auto;
+		padding: 0.2rem 0.5rem;
+		border: 1px solid var(--aw-border);
+		border-radius: 0.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+	}
+
+	@media (min-width: 768px) {
+		.aw-search-kbd {
+			display: inline;
+		}
+	}
+
+	.aw-header__right {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.75rem;
+		font-size: 0.75rem;
+	}
+
+	.aw-header__link {
+		display: none;
+		color: var(--aw-muted);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	@media (min-width: 1024px) {
+		.aw-header__link {
+			display: inline;
+		}
+	}
+
+	.aw-header__link:hover {
+		color: var(--aw-text);
+	}
+
+	.aw-menu-btn {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 1px solid var(--aw-border-strong);
+		border-radius: 50%;
+		background: transparent;
+		color: var(--aw-muted);
+		cursor: pointer;
+		transition:
+			border-color 0.2s,
+			color 0.2s;
+	}
+
+	.aw-menu-btn:hover {
+		border-color: rgba(255, 255, 255, 0.2);
+		color: var(--aw-text);
+	}
+
+	.aw-mobile-nav {
+		position: fixed;
+		inset: 0;
+		top: calc(var(--header-offset, 2.25rem) + 3.5rem);
+		z-index: 35;
+		background: var(--aw-black);
+		border-top: 1px solid var(--aw-border);
+		padding: 1.5rem 0 2rem;
+		overflow-y: auto;
+	}
+
+	.aw-mobile-nav[hidden] {
+		display: none;
+	}
+
+	.aw-mobile-nav__label {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--aw-muted-dim);
+		margin: 1rem 0 0.5rem;
+	}
+
+	.aw-mobile-nav__label:first-child {
+		margin-top: 0;
+	}
+
+	.aw-mobile-nav ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.aw-mobile-nav a {
+		display: block;
+		padding: 0.35rem 0;
+		color: var(--aw-text);
+		text-decoration: none;
+		font-size: 0.9375rem;
+	}
+
+	.aw-mobile-nav a:hover {
+		color: var(--aw-accent);
+	}
+
+	:global(body.aw-nav-open) {
+		overflow: hidden;
+	}
+</style>

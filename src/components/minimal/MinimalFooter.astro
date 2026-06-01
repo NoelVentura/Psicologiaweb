@@ -1,0 +1,34 @@
+---
+import { site, navDiscover, footerLinks } from '../../data/site';
+import { HOME } from '../../lib/paths';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="min-footer">
+	<div class="min-container">
+		<div class="min-footer__top">
+			<div>
+				<p style="margin:0 0 0.5rem;font-family:var(--m-serif);font-size:1.125rem;color:var(--m-text);">
+					{site.name}
+				</p>
+				<p style="margin:0;max-width:22rem;line-height:1.6;">{site.description}</p>
+			</div>
+			<ul class="min-footer__links">
+				{navDiscover.slice(0, 5).map((item) => (
+					<li>
+						<a href={item.href}>{item.label}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+		<div class="min-footer__bottom">
+			<p style="margin:0">© {year} {site.name}</p>
+			<nav aria-label="Legal">
+				{footerLinks.legal.map((item) => (
+					<a href={item.href}>{item.label}</a>
+				))}
+			</nav>
+		</div>
+	</div>
+</footer>

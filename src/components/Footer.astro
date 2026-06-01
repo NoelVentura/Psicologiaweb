@@ -1,0 +1,222 @@
+---
+import { site, navDiscover, navNearYou, socialLinks, footerLinks } from '../data/site';
+import { HOME } from '../lib/paths';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="aw-footer">
+	<div class="aw-container aw-footer__top">
+		<div>
+			<a href={HOME} class="aw-footer__logo">
+				<span>Psicología</span>
+				<span>con Maria Acevedo</span>
+			</a>
+			<p class="aw-footer__tagline">{site.description}</p>
+			<p class="aw-footer__note">Contenido divulgativo — no sustituye consulta clínica</p>
+		</div>
+		<div class="aw-footer__social">
+			<p class="aw-footer__label">Síguenos</p>
+			<ul>
+				{socialLinks.map((link) => (
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+
+	<div class="aw-container aw-footer__grid">
+		<div>
+			<p class="aw-footer__label">Navegar</p>
+			<ul>
+				{navDiscover.slice(0, 5).map((item) => (
+					<li>
+						<a href={item.href}>{item.label}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+		<div>
+			<p class="aw-footer__label">Más temas</p>
+			<ul>
+				{navDiscover.slice(5).map((item) => (
+					<li>
+						<a href={item.href}>{item.label}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+		<div>
+			<p class="aw-footer__label">Recursos</p>
+			<ul>
+				{navNearYou.map((item) => (
+					<li>
+						<a href={item.href}>{item.label}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+
+	<div class="aw-footer__bottom">
+		<div class="aw-container aw-footer__bottom-inner">
+			<p>© {year} {site.name}. Todos los derechos reservados.</p>
+			<nav aria-label="Legal">
+				{footerLinks.legal.map((item) => (
+					<a href={item.href}>{item.label}</a>
+				))}
+			</nav>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.aw-footer {
+		margin-top: 0;
+		border-top: 1px solid var(--aw-border);
+		background: var(--aw-black);
+		color: var(--aw-muted);
+	}
+
+	.aw-footer__top {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 2rem;
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid var(--aw-border);
+	}
+
+	.aw-footer__logo {
+		text-decoration: none;
+		color: var(--aw-text);
+		line-height: 1.1;
+	}
+
+	.aw-footer__logo span:first-child {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+
+	.aw-footer__logo span:last-child {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: var(--aw-muted);
+		margin-top: 0.25rem;
+	}
+
+	.aw-footer__tagline {
+		max-width: 22rem;
+		margin: 1rem 0 0;
+		font-size: 0.8125rem;
+		line-height: 1.6;
+		color: var(--aw-muted-soft);
+	}
+
+	.aw-footer__note {
+		margin: 0.75rem 0 0;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--aw-accent);
+	}
+
+	.aw-footer__label {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--aw-muted-dim);
+		margin: 0 0 0.75rem;
+	}
+
+	.aw-footer__social ul,
+	.aw-footer__grid ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.aw-footer__social ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+	}
+
+	.aw-footer__social a {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--aw-text);
+		text-decoration: none;
+	}
+
+	.aw-footer__social a:hover {
+		color: var(--aw-accent);
+	}
+
+	.aw-footer__grid {
+		display: grid;
+		gap: 2rem;
+		padding: 2rem 0;
+	}
+
+	@media (min-width: 768px) {
+		.aw-footer__grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.aw-footer__grid a {
+		display: block;
+		padding: 0.2rem 0;
+		font-size: 0.8125rem;
+		color: var(--aw-muted);
+		text-decoration: none;
+	}
+
+	.aw-footer__grid a:hover {
+		color: var(--aw-text);
+	}
+
+	.aw-footer__bottom {
+		border-top: 1px solid var(--aw-border);
+	}
+
+	.aw-footer__bottom-inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: space-between;
+		padding: 1rem 0 1.5rem;
+		font-size: 0.75rem;
+		color: var(--aw-muted-dim);
+	}
+
+	.aw-footer__bottom p {
+		margin: 0;
+	}
+
+	.aw-footer__bottom nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.25rem;
+	}
+
+	.aw-footer__bottom a {
+		color: var(--aw-muted-dim);
+		text-decoration: none;
+	}
+
+	.aw-footer__bottom a:hover {
+		color: var(--aw-text);
+	}
+</style>

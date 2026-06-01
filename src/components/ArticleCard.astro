@@ -1,0 +1,76 @@
+---
+interface Props {
+	title: string;
+	href: string;
+	image: string;
+	featured?: boolean;
+}
+
+const { title, href, image, featured = false } = Astro.props;
+---
+
+<article class:list={['article-card', { 'article-card--featured': featured }]}>
+	<a href={href} class="article-card__link">
+		<div class="article-card__media">
+			<img src={image} alt="" loading="lazy" width="300" height="150" />
+		</div>
+		<h3 class="article-card__title">{title}</h3>
+	</a>
+</article>
+
+<style>
+	.article-card {
+		border-top: 1px solid var(--color-border);
+	}
+
+	.article-card__link {
+		display: block;
+		padding-block: var(--space-md);
+		text-decoration: none;
+	}
+
+	.article-card__link:hover .article-card__title {
+		color: var(--color-accent);
+	}
+
+	.article-card__media {
+		overflow: hidden;
+		margin-bottom: var(--space-sm);
+		background: var(--color-border);
+	}
+
+	.article-card__media img {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		filter: grayscale(20%);
+		transition: filter 0.2s;
+	}
+
+	.article-card__link:hover .article-card__media img {
+		filter: grayscale(0%);
+	}
+
+	.article-card--featured .article-card__media img {
+		aspect-ratio: 21 / 11;
+	}
+
+	.article-card__title {
+		font-family: var(--font-serif);
+		font-size: 1.0625rem;
+		font-weight: 500;
+		line-height: 1.35;
+		margin: 0;
+		transition: color 0.15s;
+	}
+
+	.article-card--featured .article-card__title {
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+	}
+
+	@media (min-width: 900px) {
+		.article-card--featured {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

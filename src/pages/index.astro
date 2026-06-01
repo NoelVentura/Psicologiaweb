@@ -1,11 +1,20 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { HOME } from '../lib/paths';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="refresh" content="0; url=/pagina-de-inicio.html" />
+		<link rel="canonical" href={HOME} />
+		<title>Redirigiendo… | Psicología con Maria Acevedo</title>
+		<script is:inline define:vars={{ home: HOME }}>
+			location.replace(home);
+		</script>
+	</head>
+	<body>
+		<p><a href={HOME}>Ir a la página de inicio</a></p>
+	</body>
+</html>

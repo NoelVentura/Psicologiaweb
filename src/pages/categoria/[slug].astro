@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { categories } from '../../data/categories';
+import { getArticlesByCategory } from '../../data/articles';
+import { HOME, toPage } from '../../lib/paths';
+
+export function getStaticPaths() {
+	return categories.map((category) => ({
+		params: { slug: category.slug },
+		props: { category },
+	}));
+}
+
+const { category } = Astro.props;
+const categoryArticles = getArticlesByCategory(category.slug);
+---
+
+<Layout title={category.label} description={category.description}>
+	<div class="container category-page">
+		<p class="breadcrumb">
+			<a href={HOME}>Inicio</a> / {category.label}
+		</p>
+		<h1>{category.label}</h1>
+		<p class="category-page__desc">{category.description}</p>
+
+		{
+			categoryArticles.length > 0 ? (
+				<div class="articles-grid">
+					{categoryArticles.map((article) => (
+						<ArticleCard
+							title={article.title}
+							href={toPage(`/articulo/${article.slug}`)}
+							image={article.image}
+						/>
+					))}
+				</div>
+			) : (
+				<p class="empty-state">
+					Próximamente más artículos en esta categoría. Mientras tanto, explora otras secciones desde el
+					menú.
+				</p>
+			)
+		}
+	</div>
+</Layout>
+
+<style>
+	.category-page {
+		padding-block: var(--space-xl);
+	}
+
+	.category-page__desc {
+		color: var(--color-muted);
+		max-width: 40rem;
+		margin-bottom: var(--space-lg);
+	}
+
+	.articles-grid {
+		display: grid;
+		gap: 0;
+	}
+
+	@media (min-width: 900px) {
+		.articles-grid {
+			grid-template-columns: repeat(2, 1fr);
+			column-gap: var(--space-lg);
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.articles-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+</style>

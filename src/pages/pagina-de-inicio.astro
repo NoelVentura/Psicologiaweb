@@ -1,0 +1,242 @@
+---
+import MinimalLayout from '../layouts/MinimalLayout.astro';
+import MinimalHeader from '../components/minimal/MinimalHeader.astro';
+import MinimalFooter from '../components/minimal/MinimalFooter.astro';
+import ArticleCard from '../components/minimal/ArticleCard.astro';
+import {
+	site,
+	headline,
+	featuredArticles,
+	aboutSection,
+	editors,
+	collaborators,
+	recentArticles,
+	mostViewed,
+} from '../data/site';
+import { categories } from '../data/categories';
+import { pillars, reviewsSection, aboutBlock, contactBlock } from '../data/home';
+import { toPage } from '../lib/paths';
+
+const featured = featuredArticles.slice(0, 4);
+---
+
+<MinimalLayout title={site.tagline}>
+	<MinimalHeader />
+
+	<main>
+		<section class="min-hero" id="inicio">
+			<div class="min-container min-hero__grid">
+				<div class="min-hero__content">
+					<p class="min-hero__label">{headline.text}</p>
+					<h1>{headline.title}</h1>
+					<p class="min-hero__lead">{headline.subtitle}</p>
+					<div class="min-hero__actions">
+						<a href="#articulos" class="min-btn min-btn--primary">Ver artículos</a>
+						<a href={aboutSection.linkHref} class="min-btn min-btn--ghost">{aboutSection.linkLabel}</a>
+					</div>
+				</div>
+				<div class="min-hero__media">
+					<video
+						class="min-hero__video"
+						src="/videos/Maria.mp4"
+						autoplay
+						muted
+						loop
+						playsinline
+						preload="metadata"
+						aria-label="Vídeo de presentación — Maria Acevedo"
+					>
+						Tu navegador no reproduce vídeo HTML5.
+					</video>
+				</div>
+			</div>
+		</section>
+
+		<section id="articulos" class="min-section min-section--alt">
+			<div class="min-container">
+				<div class="min-section__head">
+					<h2>Destacados</h2>
+					<a href="#recientes">Más artículos</a>
+				</div>
+				<div class="min-grid min-grid--4">
+					{
+						featured.map((article) => (
+							<ArticleCard
+								title={article.title}
+								href={article.href}
+								image={article.image}
+								categorySlug={article.categorySlug}
+							/>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="min-section">
+			<div class="min-container">
+				<div class="min-section__head">
+					<h2>Temas</h2>
+				</div>
+				<div class="min-tags">
+					{
+						categories.map((cat) => (
+							<a class="min-tag" href={toPage(`/categoria/${cat.slug}`)}>
+								{cat.label}
+							</a>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="min-section min-section--alt">
+			<div class="min-container">
+				<div class="min-pillars">
+					{
+						pillars.map((pillar) => (
+							<div class="min-pillar">
+								<h3>{pillar.title}</h3>
+								<p>{pillar.description}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="min-section">
+			<div class="min-container">
+				<div class="min-section__head">
+					<h2>{reviewsSection.title}</h2>
+				</div>
+				<div class="min-quotes">
+					{
+						reviewsSection.items.map((item) => (
+							<blockquote class="min-quote">
+								<p>“{item.quote}”</p>
+								<footer>
+									<strong>{item.name}</strong>
+									{item.role}
+								</footer>
+							</blockquote>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="recientes" class="min-section min-section--alt">
+			<div class="min-container">
+				<div class="min-section__head">
+					<h2>Últimas publicaciones</h2>
+				</div>
+				<div class="min-grid min-grid--4">
+					{
+						recentArticles.slice(0, 8).map((article) => (
+							<ArticleCard
+								title={article.title}
+								href={article.href}
+								image={article.image}
+								categorySlug={article.categorySlug}
+							/>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="populares" class="min-section">
+			<div class="min-container">
+				<div class="min-section__head">
+					<h2>Lo más leído</h2>
+				</div>
+				<div class="min-grid min-grid--3">
+					{
+						mostViewed.map((article) => (
+							<ArticleCard
+								title={article.title}
+								href={article.href}
+								image={article.image}
+								categorySlug={article.categorySlug}
+							/>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="nosotros" class="min-section min-section--alt">
+			<div class="min-container min-split">
+				<div class="min-about">
+					<h2
+						style="font-family:var(--m-serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:400;margin:0 0 1rem;"
+					>
+						{aboutBlock.title}
+					</h2>
+					<p>{aboutSection.text}</p>
+					<a href={aboutSection.linkHref} class="min-btn min-btn--ghost" style="margin-top:0.5rem;">
+						{aboutBlock.ctaLabel}
+					</a>
+				</div>
+				<div>
+					<p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--m-muted);margin:0 0 1rem;">
+						Equipo
+					</p>
+					<div class="min-team">
+						{
+							editors.map((person) => (
+								<div class="min-team-member">
+									<img src={person.image} alt={person.name} width="56" height="56" loading="lazy" />
+									<p>{person.name}</p>
+									<span>{person.role}</span>
+								</div>
+							))
+						}
+					</div>
+					<div class="min-team min-team--wide" style="margin-top:1.5rem;">
+						{
+							collaborators.map((person) => (
+								<div class="min-team-member">
+									<img src={person.image} alt={person.name} width="56" height="56" loading="lazy" />
+									<p>{person.name}</p>
+									<span>{person.role}</span>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="min-section">
+			<div class="min-container min-split">
+				<div>
+					<h2
+						style="font-family:var(--m-serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:400;margin:0 0 0.75rem;"
+					>
+						{contactBlock.title}
+					</h2>
+					<p style="color:var(--m-muted);margin:0;line-height:1.7;">{contactBlock.description}</p>
+				</div>
+				<form class="min-form" action={toPage('/contacto')} method="get">
+					<div>
+						<label for="nombre">Nombre</label>
+						<input id="nombre" name="nombre" type="text" autocomplete="given-name" />
+					</div>
+					<div>
+						<label for="email">Email</label>
+						<input id="email" name="email" type="email" autocomplete="email" />
+					</div>
+					<div>
+						<label for="mensaje">Mensaje</label>
+						<textarea id="mensaje" name="mensaje" rows="4"></textarea>
+					</div>
+					<button type="submit" class="min-btn min-btn--primary">{contactBlock.submitLabel}</button>
+				</form>
+			</div>
+		</section>
+	</main>
+
+	<MinimalFooter />
+</MinimalLayout>

@@ -1,0 +1,250 @@
+/* Página de inicio — layout tipo revista */
+.home-page {
+	padding-bottom: 2rem;
+}
+
+.vogue-section {
+	padding-block: 2.5rem;
+	border-top: 1px solid var(--color-border);
+}
+
+.vogue-section:first-child {
+	border-top: none;
+	padding-top: 2rem;
+}
+
+.vogue-section__title {
+	font-family: var(--font-display);
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin: 0 0 1.75rem;
+	text-align: center;
+}
+
+/* HOY — hero */
+.vogue-hero {
+	display: grid;
+	gap: 2rem;
+}
+
+@media (min-width: 900px) {
+	.vogue-hero {
+		grid-template-columns: 1.4fr 1fr;
+		align-items: start;
+	}
+}
+
+/* Grid editorial */
+.vogue-grid {
+	display: grid;
+	gap: 2rem 1.5rem;
+}
+
+.vogue-grid--2 {
+	grid-template-columns: 1fr;
+}
+
+.vogue-grid--3 {
+	grid-template-columns: 1fr;
+}
+
+.vogue-grid--4 {
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.vogue-grid--2 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.vogue-grid--4 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 900px) {
+	.vogue-grid--3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.vogue-grid--4 {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+/* Cards */
+.editorial-card {
+	margin: 0;
+}
+
+.editorial-card__link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+.editorial-card__link:hover {
+	opacity: 1;
+}
+
+.editorial-card__link:hover .editorial-card__title {
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.editorial-card__media {
+	margin: 0 0 1rem;
+	overflow: hidden;
+	background: var(--color-media-placeholder);
+}
+
+.editorial-card__media img {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+
+.editorial-card__link:hover .editorial-card__media img {
+	transform: scale(1.03);
+}
+
+.editorial-card__kicker {
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--color-muted);
+	margin: 0 0 0.5rem;
+}
+
+.editorial-card__title {
+	font-family: var(--font-display);
+	font-size: 1.35rem;
+	font-weight: 400;
+	line-height: 1.2;
+	margin: 0 0 0.5rem;
+}
+
+.editorial-card__meta {
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--color-muted);
+	margin: 0;
+}
+
+/* Hero variant */
+.editorial-card--hero .editorial-card__media img {
+	aspect-ratio: 16 / 10;
+}
+
+.editorial-card--hero .editorial-card__title {
+	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+/* Compact */
+.editorial-card--compact .editorial-card__title {
+	font-size: 1.125rem;
+}
+
+/* Sobre nosotros */
+.vogue-about {
+	display: grid;
+	gap: 3rem;
+}
+
+@media (min-width: 900px) {
+	.vogue-about {
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+	}
+}
+
+.vogue-about__text {
+	max-width: 36rem;
+}
+
+.vogue-about__text p {
+	font-size: 1.0625rem;
+	line-height: 1.7;
+	color: var(--color-muted);
+}
+
+.vogue-about__text a {
+	color: var(--color-text);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-size: 0.75rem;
+	text-decoration: underline;
+}
+
+.vogue-team__heading {
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--color-muted);
+	margin: 0 0 1.25rem;
+}
+
+.vogue-team__heading + .vogue-team__heading {
+	margin-top: 2rem;
+}
+
+.vogue-team__grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1.5rem;
+}
+
+.vogue-team__grid--wide {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 600px) {
+	.vogue-team__grid--wide {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.vogue-team-member {
+	text-align: center;
+}
+
+.vogue-team-member img {
+	width: 4.5rem;
+	height: 4.5rem;
+	border-radius: 50%;
+	object-fit: cover;
+	margin: 0 auto 0.5rem;
+}
+
+.vogue-team-member__name {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	margin: 0;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.vogue-team-member__role {
+	font-size: 0.6875rem;
+	color: var(--color-muted);
+	margin: 0.2rem 0 0;
+}
+
+/* Intro tagline bajo header */
+.home-tagline {
+	text-align: center;
+	padding: 1.5rem 0 0.5rem;
+	max-width: 40rem;
+	margin: 0 auto;
+}
+
+.home-tagline p {
+	font-size: 0.8125rem;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--color-muted);
+	margin: 0;
+	line-height: 1.6;
+}

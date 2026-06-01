@@ -1,0 +1,54 @@
+---
+import { site, navDiscover } from '../../data/site';
+import { HOME, toPage } from '../../lib/paths';
+---
+
+<header class="min-header">
+	<div class="min-container min-header__inner">
+		<a href={HOME} class="min-logo">
+			<strong>Psicología</strong>
+			<span>con Maria Acevedo</span>
+		</a>
+
+		<nav class="min-nav" aria-label="Principal">
+			<a href={HOME}>Inicio</a>
+			<a href={`${HOME}#articulos`}>Artículos</a>
+			<a href={`${HOME}#nosotros`}>Nosotros</a>
+			<a href={toPage('/quienes-somos')}>Proyecto</a>
+			<a href={toPage('/contacto')}>Contacto</a>
+		</nav>
+
+		<button
+			type="button"
+			class="min-menu-btn"
+			aria-expanded="false"
+			aria-controls="min-mobile-nav"
+			data-menu-toggle
+		>
+			<span class="min-sr-only">Menú</span>
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+				></path>
+			</svg>
+		</button>
+	</div>
+
+	<nav id="min-mobile-nav" class="min-mobile-nav min-container" data-site-nav hidden>
+		<a href={HOME}>Inicio</a>
+		{navDiscover.slice(0, 6).map((item) => (
+			<a href={item.href}>{item.label}</a>
+		))}
+		<a href={toPage('/quienes-somos')}>Quiénes somos</a>
+		<a href={toPage('/contacto')}>Contacto</a>
+	</nav>
+</header>
+
+<script>
+	const toggle = document.querySelector('[data-menu-toggle]');
+	const nav = document.querySelector('[data-site-nav]');
+	toggle?.addEventListener('click', () => {
+		const open = toggle.getAttribute('aria-expanded') === 'true';
+		toggle.setAttribute('aria-expanded', String(!open));
+		nav?.toggleAttribute('hidden', open);
+	});
+</script>

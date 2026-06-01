@@ -1,0 +1,42 @@
+---
+interface Props {
+	name: string;
+	role: string;
+	image: string;
+}
+
+const { name, role, image } = Astro.props;
+---
+
+<div class="team-member">
+	<img class="team-member__avatar" src={image} alt={name} width="72" height="72" loading="lazy" />
+	<p class="team-member__name">{name}</p>
+	<p class="team-member__role">{role}</p>
+</div>
+
+<style>
+	.team-member {
+		text-align: center;
+	}
+
+	.team-member__avatar {
+		width: 4.5rem;
+		height: 4.5rem;
+		margin: 0 auto var(--space-xs);
+		border-radius: 50%;
+		object-fit: cover;
+		filter: grayscale(30%);
+	}
+
+	.team-member__name {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		margin: 0;
+	}
+
+	.team-member__role {
+		font-size: 0.8125rem;
+		color: var(--color-muted);
+		margin: 0.15rem 0 0;
+	}
+</style>

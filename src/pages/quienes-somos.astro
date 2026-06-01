@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { quienesSomos } from '../data/site';
+import { HOME } from '../lib/paths';
+---
+
+<Layout title={quienesSomos.title} description={quienesSomos.intro}>
+	<article class="page container">
+		<h1>{quienesSomos.title}</h1>
+		<p class="lead">{quienesSomos.intro}</p>
+		{quienesSomos.objectives.map((paragraph) => (
+			<p>{paragraph}</p>
+		))}
+		<p>
+			<a href={HOME}>← Volver al inicio</a>
+		</p>
+	</article>
+</Layout>
+
+<style>
+	.page {
+		padding-block: var(--space-xl);
+		max-width: 40rem;
+	}
+
+	.lead {
+		font-size: 1.125rem;
+		color: var(--color-muted);
+	}
+</style>

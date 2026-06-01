@@ -1,46 +1,26 @@
-# Astro Starter Kit: Basics
+# Psicología con Maria Acevedo
 
-```sh
-npm create astro@latest -- --template basics
+Réplica minimalista de [psicologia-online.com](https://www.psicologia-online.com/): misma estructura, secciones y contenidos, con diseño limpio en blanco y negro.
+
+## Desarrollo
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Abre [http://localhost:4321/pagina-de-inicio.html](http://localhost:4321/pagina-de-inicio.html) (la raíz `/` redirige automáticamente).
 
-## 🚀 Project Structure
+## Estructura
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/data/site.ts` — textos, menús y listados de artículos
+- `src/pages/index.astro` — página principal
+- `src/pages/quienes-somos.astro` — sección «Quiénes somos»
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## Funciones
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Imágenes reales** desde el CDN de psicologia-online.com
+- **Páginas de categoría** en `/categoria/[slug]` (9 secciones del menú)
+- **Páginas de artículo** en `/articulo/[slug]` con texto completo importado
+- Para actualizar contenidos desde la fuente: `npm run import:articles`
+- **Modo oscuro** — botón ☀/☽ en la cabecera; recuerda tu preferencia

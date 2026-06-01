@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { articles } from '../../data/articles';
+import { getCategoryBySlug } from '../../data/categories';
+import { getArticleContent } from '../../lib/article-content';
+import { HOME, toPage } from '../../lib/paths';
+
+export function getStaticPaths() {
+	return articles.map((article) => ({
+		params: { slug: article.slug },
+		props: {
+			article,
+			content: getArticleContent(article.slug),
+		},
+	}));
+}
+
+const { article, content } = Astro.props;
+const category = getCategoryBySlug(article.category);
+---
+
+<Layout title={article.title}>
+	<article class="container article-page">
+		<p class="breadcrumb">
+			<a href={HOME}>Inicio</a>
+			{category && (
+				<>
+					{' '}
+					/ <a href={toPage(`/categoria/${category.slug}`)}>{category.label}</a>
+				</>
+			)}
+		</p>
+
+		<figure class="article-page__hero">
+			<img src={article.image} alt="" width="900" height="470" loading="eager" />
+		</figure>
+
+		<header class="article-page__header">
+			<h1>{article.title}</h1>
+			{
+				content?.author && (
+					<p class="article-page__meta">
+						Por <span class="article-page__author">{content.author}</span>
+						{content.authorRole && <span class="article-page__role">, {content.authorRole}</span>}
+						{content.publishedAt && <time> · {content.publishedAt}</time>}
+					</p>
+				)
+			}
+		</header>
+
+		{
+			content?.bodyHtml ? (
+				<div class="article-prose" set:html={content.bodyHtml} />
+			) : (
+				<div class="article-page__fallback">
+					<p>Contenido no disponible.</p>
+					<p>
+						<a href={HOME}>← Volver al inicio</a>
+					</p>
+				</div>
+			)
+		}
+
+		<p class="article-page__disclaimer">
+			Contenido divulgativo. No sustituye el consejo de un profesional de la salud mental.
+		</p>
+
+		<footer class="article-page__footer">
+			{
+				category && (
+					<p>
+						<a href={toPage(`/categoria/${category.slug}`)}>Más artículos en {category.label} →</a>
+					</p>
+				)
+			}
+			<p>
+				<a href={HOME}>← Volver al inicio</a>
+			</p>
+		</footer>
+	</article>
+</Layout>
+
+<style>
+	.article-page {
+		padding-block: var(--space-xl);
+		max-width: 42rem;
+	}
+
+	.article-page__hero {
+		margin: 0 0 var(--space-lg);
+		overflow: hidden;
+	}
+
+	.article-page__hero img {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+	}
+
+	.article-page__header {
+		margin-bottom: var(--space-lg);
+	}
+
+	.article-page__header h1 {
+		margin-bottom: var(--space-sm);
+	}
+
+	.article-page__meta {
+		font-size: 0.875rem;
+		color: var(--color-muted);
+		margin: 0;
+	}
+
+	.article-page__author {
+		color: var(--color-text);
+		font-weight: 500;
+	}
+
+	.article-page__disclaimer {
+		margin-top: var(--space-lg);
+		padding: var(--space-sm) var(--space-md);
+		font-size: 0.8125rem;
+		color: var(--color-muted);
+		border-left: 2px solid var(--color-border);
+	}
+
+	.article-page__footer {
+		margin-top: var(--space-md);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-border);
+		font-size: 0.9375rem;
+	}
+
+	.article-page__footer p {
+		margin-bottom: var(--space-xs);
+	}
+
+	.article-page__footer a {
+		text-decoration: none;
+	}
+
+	.article-page__footer a:hover {
+		text-decoration: underline;
+	}
+</style>

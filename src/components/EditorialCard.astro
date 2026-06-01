@@ -1,0 +1,29 @@
+---
+import { getCategoryBySlug } from '../data/categories';
+import { site } from '../data/site';
+
+interface Props {
+	title: string;
+	href: string;
+	image: string;
+	categorySlug?: string;
+	variant?: 'default' | 'hero' | 'compact';
+	loading?: 'lazy' | 'eager';
+}
+
+const { title, href, image, categorySlug, variant = 'default', loading = 'lazy' } = Astro.props;
+const category = categorySlug ? getCategoryBySlug(categorySlug) : undefined;
+---
+
+<article class:list={['editorial-card', `editorial-card--${variant}`]}>
+	<a href={href} class="editorial-card__link">
+		<figure class="editorial-card__media">
+			<img src={image} alt="" loading={loading} width="600" height="400" />
+		</figure>
+		<div class="editorial-card__body">
+			{category && <p class="editorial-card__kicker">{category.label}</p>}
+			<h3 class="editorial-card__title">{title}</h3>
+			<p class="editorial-card__meta">Por {site.name}</p>
+		</div>
+	</a>
+</article>

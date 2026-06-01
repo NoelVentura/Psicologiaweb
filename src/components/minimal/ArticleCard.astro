@@ -1,0 +1,23 @@
+---
+import { getCategoryBySlug } from '../../data/categories';
+
+interface Props {
+	title: string;
+	href: string;
+	image: string;
+	categorySlug: string;
+}
+
+const { title, href, image, categorySlug } = Astro.props;
+const category = getCategoryBySlug(categorySlug);
+---
+
+<article class="min-card">
+	<a href={href} class="min-card__link">
+		<div class="min-card__media">
+			<img src={image} alt="" loading="lazy" width="400" height="300" />
+		</div>
+		<p class="min-card__cat">{category?.label ?? 'Artículo'}</p>
+		<h3 class="min-card__title">{title}</h3>
+	</a>
+</article>
