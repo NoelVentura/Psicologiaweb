@@ -15,7 +15,7 @@ import {
 } from '../data/site';
 import { categories } from '../data/categories';
 import { pillars, reviewsSection, aboutBlock, contactBlock } from '../data/home';
-import { toPage } from '../lib/paths';
+import { publicAsset, toPage } from '../lib/paths';
 
 const featured = featuredArticles.slice(0, 4);
 ---
@@ -38,7 +38,7 @@ const featured = featuredArticles.slice(0, 4);
 				<div class="min-hero__media">
 					<video
 						class="min-hero__video"
-						src="/videos/Maria.mp4"
+						src={publicAsset('/videos/Maria.mp4')}
 						autoplay
 						muted
 						loop
